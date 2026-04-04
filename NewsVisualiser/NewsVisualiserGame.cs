@@ -99,7 +99,7 @@ namespace NewsVisualiser
             base.LoadComplete();
 
             var size = frameworkConfig.GetBindable<Size>(FrameworkSetting.WindowedSize);
-            size.Value = new Size(1000, 1000);
+            size.Value = new Size(1000, 1800);
 
             windowMode = frameworkConfig.GetBindable<WindowMode>(FrameworkSetting.WindowMode);
             windowMode.Value = WindowMode.Windowed;
