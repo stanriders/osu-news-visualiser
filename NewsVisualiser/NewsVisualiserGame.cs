@@ -15,13 +15,10 @@ using osu.Framework.Input.Handlers.Mouse;
 using osu.Framework.Input.Handlers.Tablet;
 using osu.Framework.Platform;
 using osu.Game;
-using osu.Game.Configuration;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Osu;
-using Notification = osu.Game.Overlays.Notifications.Notification;
 
 namespace NewsVisualiser
 {
@@ -61,12 +58,6 @@ namespace NewsVisualiser
             var notificationDisplay = new NotificationDisplay();
             dependencies.CacheAs(notificationDisplay);
 
-            var notificationOverlay = new EmptyNotificationOverlay();
-            dependencies.CacheAs<INotificationOverlay>(notificationOverlay);
-
-            var screenshotManager = new ScreenshotManager();
-            dependencies.CacheAs(screenshotManager);
-
             AddRange(new Drawable[]
             {
                 new OsuContextMenuContainer
@@ -80,7 +71,6 @@ namespace NewsVisualiser
                 },
                 dialogOverlay,
                 notificationDisplay,
-                screenshotManager
             });
         }
 
@@ -114,30 +104,7 @@ namespace NewsVisualiser
             windowMode = frameworkConfig.GetBindable<WindowMode>(FrameworkSetting.WindowMode);
             windowMode.Value = WindowMode.Windowed;
 
-            var y = frameworkConfig.GetBindable<double>(FrameworkSetting.WindowedPositionY);
-            y.Value = 0;
-
-            var hideCursor = LocalConfig.GetBindable<bool>(OsuSetting.ScreenshotCaptureMenuCursor);
-            hideCursor.Value = false;
-
-            var format = LocalConfig.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat);
-            format.Value = ScreenshotFormat.Png;
-
             LocalConfig.Save();
-        }
-
-        public partial class EmptyNotificationOverlay : INotificationOverlay
-        {
-            public void Post(Notification notification)
-            {
-            }
-
-            public void Hide()
-            {
-            }
-
-            public IBindable<int> UnreadCount => new Bindable<int>(0);
-            public IEnumerable<Notification> AllNotifications => [];
         }
     }
 }

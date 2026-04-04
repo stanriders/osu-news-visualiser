@@ -1,6 +1,8 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using NewsVisualiser.Components;
 using osu.Framework;
@@ -12,6 +14,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Platform;
 using osu.Game.Configuration;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -21,6 +24,7 @@ using osu.Game.Overlays;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Rulesets;
 using osuTK;
+using SixLabors.ImageSharp;
 
 namespace NewsVisualiser
 {
@@ -37,8 +41,7 @@ namespace NewsVisualiser
         [Resolved]
         private DialogOverlay dialogOverlay { get; set; } = null!;
 
-        private Container contentContainer = null!;
-        private Container controls = null!;
+        private ExtendedBufferedContainer contentContainer = null!;
 
         [Resolved]
         private OsuColour colours { get; set; } = null!;
@@ -54,9 +57,13 @@ namespace NewsVisualiser
             RelativeSizeAxes = Axes.Both;
         }
 
+        private Storage storage = null!;
+
         [BackgroundDependencyLoader]
-        private void load(ScreenshotManager screenshotManager)
+        private void load(Storage storage)
         {
+            this.storage = storage.GetStorageForDirectory(@"screenshots");
+
             InternalChildren = new Drawable[]
             {
                 new GridContainer
@@ -68,7 +75,7 @@ namespace NewsVisualiser
                     {
                         new Drawable[]
                         {
-                            controls = new Container
+                            new Container
                             {
                                 RelativeSizeAxes = Axes.X,
                                 Height = CONTROL_AREA_HEIGHT,
@@ -87,10 +94,11 @@ namespace NewsVisualiser
                                         Text = "Save screenshot",
                                         Action = async void () =>
                                         {
-                                            controls.Alpha = 0;
+                                            contentContainer.RenderToImage = true;
                                             await Task.Delay(100).ConfigureAwait(false);
-                                            await screenshotManager.TakeScreenshotAsync().ConfigureAwait(false);
-                                            controls.Alpha = 1;
+
+                                            using var screenshotStream = getScreenshotStream();
+                                            await contentContainer.Image.SaveAsPngAsync(screenshotStream).ConfigureAwait(false);
                                         }
                                     },
                                     new FillFlowContainer
@@ -122,11 +130,15 @@ namespace NewsVisualiser
                                         RelativeSizeAxes = Axes.Both,
                                         Colour = Color4Extensions.FromHex("24222a")
                                     },
-                                    contentContainer = new Container
+                                    new OsuScrollContainer
                                     {
-                                        RelativeSizeAxes = Axes.X,
-                                        AutoSizeAxes = Axes.Y,
-                                        Padding = new MarginPadding(10)
+                                        RelativeSizeAxes = Axes.Both,
+                                        Child = contentContainer = new ExtendedBufferedContainer
+                                        {
+                                            RelativeSizeAxes = Axes.X,
+                                            AutoSizeAxes = Axes.Y,
+                                            Padding = new MarginPadding(10)
+                                        }
                                     }
                                 }
                             }
@@ -145,6 +157,24 @@ namespace NewsVisualiser
             }
 
             contentContainer.AddRange(createContent());
+        }
+
+        private Stream? getScreenshotStream()
+        {
+            DateTime dt = DateTime.Now;
+
+            string withoutIndex = $"news_{dt:yyyy-MM-dd_HH-mm-ss}.png";
+            if (!storage.Exists(withoutIndex))
+                return storage.GetStream(withoutIndex, FileAccess.Write, FileMode.Create);
+
+            for (ulong i = 1; i < ulong.MaxValue; i++)
+            {
+                string indexedName = $"news_{dt:yyyy-MM-dd_HH-mm-ss}-{i}.png";
+                if (!storage.Exists(indexedName))
+                    return storage.GetStream(indexedName, FileAccess.Write, FileMode.Create);
+            }
+
+            return null;
         }
 
         protected override void LoadComplete()
