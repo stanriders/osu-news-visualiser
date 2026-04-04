@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "dotnet",
+            "args": [
+                "${workspaceRoot}/NewsVisualiser/bin/Debug/net8.0/NewsVisualiser.dll",
+                "place-your-arguments-here (launch.json)"
+            ],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "Build (Debug)",
+            "env": {},
+            "console": "internalConsole"
+        },
+        {
+            "name": "Release",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "dotnet",
+            "args": [
+                "${workspaceRoot}/NewsVisualiser/bin/Release/net8.0/NewsVisualiser.dll",
+                "place-your-arguments-here (launch.json)"
+            ],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "Build (Release)",
+            "env": {},
+            "console": "internalConsole"
+        }
+    ]
+}
