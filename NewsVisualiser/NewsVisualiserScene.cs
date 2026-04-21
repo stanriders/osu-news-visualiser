@@ -414,7 +414,7 @@ namespace NewsVisualiser
             }
             else
             {
-                comparisonColour = colours.Gray9;
+                comparisonColour = colours.GrayD.Opacity(0);
                 icon = FontAwesome.Solid.Minus;
             }
 
@@ -511,36 +511,34 @@ namespace NewsVisualiser
                             new FillFlowContainer
                             {
                                 AutoSizeAxes = Axes.Both,
-                                Direction = FillDirection.Vertical,
+                                Direction = FillDirection.Horizontal,
+                                Spacing = new Vector2(8),
                                 Children = new Drawable[]
                                 {
-                                    new FillFlowContainer()
+                                    new FillFlowContainer
                                     {
                                         AutoSizeAxes = Axes.Both,
-                                        Direction = FillDirection.Horizontal,
-                                        Spacing = new Vector2(8),
+                                        Direction = FillDirection.Vertical,
                                         Children = new Drawable[]
                                         {
                                             new OsuSpriteText
                                             {
-                                                Anchor = Anchor.CentreLeft,
-                                                Origin = Anchor.CentreLeft,
                                                 Font = font,
                                                 Text = $"After: {(after != null ? $"{after:0.0##}x" : "variable")}{(isntActuallyTrue ? "*" : "")}",
-                                                UseFullGlyphHeight = true
+                                                UseFullGlyphHeight = true,
                                             },
-                                            new SpriteIcon
-                                            {
-                                                Anchor = Anchor.CentreLeft,
-                                                Origin = Anchor.CentreLeft,
-                                                Size = new Vector2(20),
-                                                Colour = comparisonColour,
-                                                Icon = icon,
-                                                Alpha = after == null ? 0 : 1
-                                            }
+                                            range
                                         }
                                     },
-                                    range
+                                    new SpriteIcon
+                                    {
+                                        Anchor = Anchor.CentreLeft,
+                                        Origin = Anchor.CentreLeft,
+                                        Size = new Vector2(20),
+                                        Colour = comparisonColour,
+                                        Icon = icon,
+                                        Alpha = after == null ? 0 : 1
+                                    }
                                 }
                             }
                         }
