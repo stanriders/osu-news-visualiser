@@ -336,6 +336,7 @@ namespace NewsVisualiser
                             Spacing = new Vector2(modContainerSpacing, modContainerSpacingY),
                             Children = new Drawable[]
                             {
+                                getModContainer(new OsuModTargetPractice(), 0.1, 0.01),
                                 getModContainer(new OsuModClassic(), 0.96, 0.985, true),
                                 getModContainer(new OsuModDifficultyAdjust(), 0.5, 1.0, true, 0.1, 1.0),
                                 getModContainer(new OsuModRandom(), 1.0, 0.7),
