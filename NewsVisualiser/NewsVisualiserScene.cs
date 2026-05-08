@@ -186,11 +186,150 @@ namespace NewsVisualiser
 
         private Drawable[] createContent()
         {
+            var beatmap = ProcessorWorkingBeatmap.FromFileOrId("4303461");
+
+            var redColorProvider = new OverlayColourProvider(OverlayColourScheme.Red);
+            var blueColorProvider = new OverlayColourProvider(OverlayColourScheme.Blue);
+
             return new Drawable[]
             {
-                new OsuSpriteText
+                new FillFlowContainer
                 {
-                    Text = "Content",
+                    AutoSizeAxes = Axes.Both,
+                    Direction = FillDirection.Vertical,
+                    Children = new Drawable[]
+                    {
+                        new FillFlowContainer
+                        {
+                            AutoSizeAxes = Axes.Both,
+                            Direction = FillDirection.Horizontal,
+                            Spacing = new Vector2(5),
+                            Children = new[]
+                            {
+                                new OsuSpriteText()
+                                {
+                                    Origin = Anchor.BottomLeft,
+                                    Anchor = Anchor.BottomLeft,
+                                    Text = "Heat abnormal [OGLE-2005-BLG-390Lb]",
+                                    Font = OsuFont.Default.With(size: 24, weight: FontWeight.SemiBold),
+                                },
+                                new OsuSpriteText()
+                                {
+                                    Origin = Anchor.BottomLeft,
+                                    Anchor = Anchor.BottomLeft,
+                                    Text = "by Iyowa feat. Adachi Rei",
+                                    Font = OsuFont.Default.With(size: 22, weight: FontWeight.Regular),
+                                },
+                            }
+                        },
+                        new OsuSpriteText
+                        {
+                            Text = "mapped by Ryuusei Aika",
+                            Font = OsuFont.Default.With(size: 20),
+                        },
+                    }
+                },
+                new Container
+                {
+                    Origin = Anchor.TopRight,
+                    Anchor = Anchor.TopRight,
+                    AutoSizeAxes = Axes.Both,
+                    Masking = true,
+                    CornerRadius = 6,
+                    Children = new Drawable[]
+                    {
+                        new Box()
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Colour = Colour4.FromHex("3d3946aa")
+                        },
+                        new FillFlowContainer
+                        {
+                            AutoSizeAxes = Axes.Both,
+                            Padding = new MarginPadding() { Horizontal = 14, Vertical = 10 },
+                            Direction = FillDirection.Vertical,
+                            Spacing = new Vector2(8),
+                            Children = new Drawable[]
+                            {
+                                new FillFlowContainer()
+                                {
+                                    AutoSizeAxes = Axes.Both,
+                                    Direction = FillDirection.Horizontal,
+                                    Spacing = new Vector2(12),
+                                    Children = new Drawable[]
+                                    {
+                                        new Circle()
+                                        {
+                                            Origin = Anchor.CentreLeft,
+                                            Anchor = Anchor.CentreLeft,
+                                            Width = 16,
+                                            Height = 16,
+                                            Colour = blueColorProvider.Colour3
+                                        },
+                                        new OsuSpriteText
+                                        {
+                                            Origin = Anchor.CentreLeft,
+                                            Anchor = Anchor.CentreLeft,
+                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                            Text = "Aim"
+                                        }
+                                    }
+                                },
+                                new FillFlowContainer()
+                                {
+                                    AutoSizeAxes = Axes.Both,
+                                    Direction = FillDirection.Horizontal,
+                                    Spacing = new Vector2(12),
+                                    Children = new Drawable[]
+                                    {
+                                        new Circle()
+                                        {
+                                            Origin = Anchor.CentreLeft,
+                                            Anchor = Anchor.CentreLeft,
+                                            Width = 16,
+                                            Height = 16,
+                                            Colour = blueColorProvider.Colour4
+                                        },
+                                        new OsuSpriteText
+                                        {
+                                            Origin = Anchor.CentreLeft,
+                                            Anchor = Anchor.CentreLeft,
+                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                            Text = "Speed"
+                                        }
+                                    }
+                                },
+                                new FillFlowContainer()
+                                {
+                                    AutoSizeAxes = Axes.Both,
+                                    Direction = FillDirection.Horizontal,
+                                    Spacing = new Vector2(12),
+                                    Children = new Drawable[]
+                                    {
+                                        new Circle()
+                                        {
+                                            Origin = Anchor.CentreLeft,
+                                            Anchor = Anchor.CentreLeft,
+                                            Width = 16,
+                                            Height = 16,
+                                            Colour = redColorProvider.Colour1
+                                        },
+                                        new OsuSpriteText
+                                        {
+                                            Origin = Anchor.CentreLeft,
+                                            Anchor = Anchor.CentreLeft,
+                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                            Text = "Reading"
+                                        }
+                                    }
+                                },
+                            }
+                        }
+                    },
+                },
+                new StrainVisualizer(beatmap)
+                {
+                    Margin = new MarginPadding() { Top = 120 }
                 }
             };
         }

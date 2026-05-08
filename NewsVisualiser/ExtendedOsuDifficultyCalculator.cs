@@ -1,0 +1,40 @@
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
+
+using System.Collections.Generic;
+using System.Linq;
+using osu.Game.Beatmaps;
+using osu.Game.Rulesets;
+using osu.Game.Rulesets.Difficulty.Preprocessing;
+using osu.Game.Rulesets.Difficulty.Skills;
+using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Osu.Difficulty;
+
+namespace NewsVisualiser
+{
+    public class ExtendedOsuDifficultyCalculator : OsuDifficultyCalculator, IExtendedDifficultyCalculator
+    {
+        private Skill[] skills = [];
+        private DifficultyHitObject[] difficultyHitObjects = [];
+
+        public ExtendedOsuDifficultyCalculator(IRulesetInfo ruleset, IWorkingBeatmap beatmap)
+            : base(ruleset, beatmap)
+        {
+        }
+
+        public Skill[] GetSkills() => skills;
+        public DifficultyHitObject[] GetDifficultyHitObjects() => difficultyHitObjects;
+
+        protected override IEnumerable<DifficultyHitObject> CreateDifficultyHitObjects(IBeatmap beatmap, Mod[] mods)
+        {
+            difficultyHitObjects = base.CreateDifficultyHitObjects(beatmap, mods).ToArray();
+            return difficultyHitObjects;
+        }
+
+        protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods)
+        {
+            skills = base.CreateSkills(beatmap, mods);
+            return skills;
+        }
+    }
+}
