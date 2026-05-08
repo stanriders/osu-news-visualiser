@@ -14,7 +14,7 @@ namespace NewsVisualiser.Components
     /// </summary>
     public partial class LineDrawable : Container
     {
-        public LineDrawable(Vector2 start, Vector2 end)
+        public LineDrawable(Vector2 start, Vector2 end, Colour4 colour)
         {
             Origin = Anchor.CentreLeft;
             Masking = true;
@@ -32,7 +32,7 @@ namespace NewsVisualiser.Components
                 Anchor = Anchor.Centre,
                 RelativeSizeAxes = Axes.Both,
                 EdgeSmoothness = Vector2.One,
-                Colour = Colour4.White
+                Colour = colour
             };
         }
     }
