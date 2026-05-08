@@ -287,6 +287,31 @@ namespace NewsVisualiser
                 CurrentTime = 0
             };
 
+            var offset = new Vector2(-120, 420);
+            var offset2 = new Vector2(50, 430);
+
+            var l2Start = offset + slider.Position;
+            var l2End = offset + slider.Position + secondSlider.Position - slider.EndPosition;
+
+            var s2l2Start = offset2 + slider2.Position;
+            var s2l2End = offset2 + slider2.Position + slider2.EndPosition - slider2.Position;
+
+            Vector2 v1 = hitcircle.Position - slider.Position;
+            Vector2 v2 = secondSlider.Position - slider.EndPosition;
+
+            float dot = Vector2.Dot(v1, v2);
+            float det = v1.X * v2.Y - v1.Y * v2.X;
+
+            double angle = Math.Abs(Math.Atan2(det, dot));
+
+            Vector2 v12 = hitcircle2.Position - slider2.Position;
+            Vector2 v22 = slider2.EndPosition - slider2.Position;
+
+            float dot2 = Vector2.Dot(v12, v22);
+            float det2 = v12.X * v22.Y - v12.Y * v22.X;
+
+            double angle2 = Math.Abs(Math.Atan2(det2, dot2));
+
             return new Drawable[]
             {
                 new Container
@@ -366,7 +391,7 @@ namespace NewsVisualiser
                 new RulesetSkinProvidingContainer(new OsuRuleset(), new OsuBeatmap(), null)
                 {
                     RelativeSizeAxes = Axes.X,
-                    Height = 600,
+                    Height = 820,
                     Clock = new FramedClock(manualClock),
                     Children = new Drawable[]
                     {
@@ -377,15 +402,34 @@ namespace NewsVisualiser
                         new DrawableSlider(slider2),
                         new DrawableSlider(secondSlider2),
 
-                        new LineDrawable(hitcircle.Position, slider.Position),
-                        //new LineDrawable(slider.Position, slider.Position),
-                        new LineDrawable(slider.Position, secondSlider.Position),
-                        new LineDrawable(secondSlider.Position, secondSlider.EndPosition),
+                        new LineDrawable(hitcircle.Position, slider.Position, Colour4.LightGreen),
+                        new LineDrawable(slider.EndPosition, secondSlider.Position, Colour4.Yellow),
 
-                        new LineDrawable(hitcircle2.Position, slider2.Position),
-                        new LineDrawable(slider2.Position, slider2.EndPosition),
-                        new LineDrawable(slider2.EndPosition, secondSlider2.Position),
-                        new LineDrawable(secondSlider2.Position, secondSlider2.EndPosition),
+                        new LineDrawable(hitcircle2.Position, slider2.Position, Colour4.LightGreen),
+                        new LineDrawable(slider2.Position, slider2.EndPosition, Colour4.Yellow),
+                        new LineDrawable(slider2.EndPosition, secondSlider2.Position, Colour4.White),
+
+                        new LineDrawable(offset + hitcircle.Position, offset + slider.Position, Colour4.LightGreen),
+                        new LineDrawable(l2Start, l2End, Colour4.Yellow),
+
+                        new LineDrawable(offset2 + hitcircle2.Position, offset2 + slider2.Position, Colour4.LightGreen),
+                        new LineDrawable(s2l2Start, s2l2End, Colour4.Yellow),
+
+                        new OsuSpriteText
+                        {
+                            Position = offset + slider.Position - new Vector2(-15, 45),
+                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                            Text = $"Old: {double.RadiansToDegrees(angle):N2}°"
+                        },
+                        new Circle { Position = offset + slider.Position - new Vector2(16), Colour = Colour4.White, Size = new Vector2(32) },
+
+                        new OsuSpriteText
+                        {
+                            Position = offset2 + slider2.Position - new Vector2(-15, 45),
+                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                            Text = $"New: {double.RadiansToDegrees(angle2):N2}°"
+                        },
+                        new Circle { Position = offset2 + slider2.Position - new Vector2(16), Colour = Colour4.White, Size = new Vector2(32) }
                     }
                 }
             };
