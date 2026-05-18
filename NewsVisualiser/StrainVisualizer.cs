@@ -31,6 +31,7 @@ namespace NewsVisualiser
 {
     public partial class StrainVisualizer : Container
     {
+        private readonly bool withDistance;
         private readonly List<Bindable<bool>> graphToggles = new List<Bindable<bool>>();
 
         public readonly Bindable<int> TimeUntilFirstStrain = new Bindable<int>();
@@ -47,8 +48,9 @@ namespace NewsVisualiser
 
         private const int strain_length = 400;
 
-        public StrainVisualizer(IWorkingBeatmap beatmap)
+        public StrainVisualizer(IWorkingBeatmap beatmap, bool withDistance)
         {
+            this.withDistance = withDistance;
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
 
@@ -67,7 +69,7 @@ namespace NewsVisualiser
                 return;
 
             var skills = extendedDifficultyCalculator.GetSkills();
-            skills = [skills.First(x=> x is Reading), skills.First(x => x is Aim), skills.First(x => x is Speed)];
+            skills = [skills.First(x => x is Aim), skills.OfType<Speed>().First(x => x.WithDistance == withDistance)];
 
             if (skills.Length == 0)
             {
@@ -88,9 +90,8 @@ namespace NewsVisualiser
             var blueColorProvider = new OverlayColourProvider(OverlayColourScheme.Blue);
             skillColours = new ColourInfo[]
             {
-                redColorProvider.Colour1,
                 blueColorProvider.Colour3,
-                blueColorProvider.Colour4,
+                redColorProvider.Colour1,
                 blueColorProvider.Colour2,
             };
 
@@ -135,8 +136,7 @@ namespace NewsVisualiser
 
         private void addStrainBars(Skill[] skills, List<Strain[]> strainLists)
         {
-            double strainMaxValue = 486.72275775524759;//strainLists.SelectMany(x => x).MaxBy(x => x.Difficulty)!.Difficulty;
-
+            double strainMaxValue = strainLists.SelectMany(x => x).MaxBy(x => x.Difficulty)!.Difficulty;
 
             for (int i = 0; i < skills.Length; i++)
             {

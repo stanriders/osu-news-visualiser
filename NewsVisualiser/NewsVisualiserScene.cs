@@ -186,7 +186,7 @@ namespace NewsVisualiser
 
         private Drawable[] createContent()
         {
-            var beatmap = ProcessorWorkingBeatmap.FromFileOrId("4303461");
+            var beatmap = ProcessorWorkingBeatmap.FromFileOrId("5195256");
 
             var redColorProvider = new OverlayColourProvider(OverlayColourScheme.Red);
             var blueColorProvider = new OverlayColourProvider(OverlayColourScheme.Blue);
@@ -210,126 +210,206 @@ namespace NewsVisualiser
                                 {
                                     Origin = Anchor.BottomLeft,
                                     Anchor = Anchor.BottomLeft,
-                                    Text = "Heat abnormal [OGLE-2005-BLG-390Lb]",
+                                    Text = $"Sidetracked Day [{beatmap.BeatmapInfo.DifficultyName}]",
                                     Font = OsuFont.Default.With(size: 24, weight: FontWeight.SemiBold),
                                 },
                                 new OsuSpriteText()
                                 {
                                     Origin = Anchor.BottomLeft,
                                     Anchor = Anchor.BottomLeft,
-                                    Text = "by Iyowa feat. Adachi Rei",
+                                    Text = "by wuk",
                                     Font = OsuFont.Default.With(size: 22, weight: FontWeight.Regular),
                                 },
                             }
                         },
                         new OsuSpriteText
                         {
-                            Text = "mapped by Ryuusei Aika",
+                            Text = "mapset by sytho",
                             Font = OsuFont.Default.With(size: 20),
                         },
                     }
                 },
-                new Container
+                new FillFlowContainer
                 {
-                    Origin = Anchor.TopRight,
-                    Anchor = Anchor.TopRight,
-                    AutoSizeAxes = Axes.Both,
-                    Masking = true,
-                    CornerRadius = 6,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Direction = FillDirection.Vertical,
+                    Spacing = new Vector2(12),
                     Children = new Drawable[]
                     {
-                        new Box()
+                        new Container()
                         {
-                            RelativeSizeAxes = Axes.Both,
-                            Colour = Colour4.FromHex("3d3946aa")
-                        },
-                        new FillFlowContainer
-                        {
-                            AutoSizeAxes = Axes.Both,
-                            Padding = new MarginPadding() { Horizontal = 14, Vertical = 10 },
-                            Direction = FillDirection.Vertical,
-                            Spacing = new Vector2(8),
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
                             Children = new Drawable[]
                             {
-                                new FillFlowContainer()
+                                new Container
                                 {
+                                    Origin = Anchor.TopRight,
+                                    Anchor = Anchor.TopRight,
                                     AutoSizeAxes = Axes.Both,
-                                    Direction = FillDirection.Horizontal,
-                                    Spacing = new Vector2(12),
+                                    Masking = true,
+                                    CornerRadius = 6,
                                     Children = new Drawable[]
                                     {
-                                        new Circle()
+                                        new Box()
                                         {
-                                            Origin = Anchor.CentreLeft,
-                                            Anchor = Anchor.CentreLeft,
-                                            Width = 16,
-                                            Height = 16,
-                                            Colour = blueColorProvider.Colour3
+                                            RelativeSizeAxes = Axes.Both,
+                                            Colour = Colour4.FromHex("3d3946aa")
                                         },
-                                        new OsuSpriteText
+                                        new FillFlowContainer
                                         {
-                                            Origin = Anchor.CentreLeft,
-                                            Anchor = Anchor.CentreLeft,
-                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
-                                            Text = "Aim"
+                                            AutoSizeAxes = Axes.Both,
+                                            Padding = new MarginPadding() { Horizontal = 14, Vertical = 10 },
+                                            Direction = FillDirection.Vertical,
+                                            Spacing = new Vector2(8),
+                                            Children = new Drawable[]
+                                            {
+                                                new FillFlowContainer()
+                                                {
+                                                    AutoSizeAxes = Axes.Both,
+                                                    Direction = FillDirection.Horizontal,
+                                                    Spacing = new Vector2(12),
+                                                    Children = new Drawable[]
+                                                    {
+                                                        new Circle()
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Width = 16,
+                                                            Height = 16,
+                                                            Colour = blueColorProvider.Colour3
+                                                        },
+                                                        new OsuSpriteText
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Text = "Aim"
+                                                        }
+                                                    }
+                                                },
+                                                new FillFlowContainer()
+                                                {
+                                                    AutoSizeAxes = Axes.Both,
+                                                    Direction = FillDirection.Horizontal,
+                                                    Spacing = new Vector2(12),
+                                                    Children = new Drawable[]
+                                                    {
+                                                        new Circle()
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Width = 16,
+                                                            Height = 16,
+                                                            Colour = redColorProvider.Colour1
+                                                        },
+                                                        new OsuSpriteText
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Text = "Speed (before)"
+                                                        }
+                                                    }
+                                                },
+                                            }
                                         }
-                                    }
+                                    },
                                 },
-                                new FillFlowContainer()
+                                new StrainVisualizer(beatmap, true)
                                 {
-                                    AutoSizeAxes = Axes.Both,
-                                    Direction = FillDirection.Horizontal,
-                                    Spacing = new Vector2(12),
-                                    Children = new Drawable[]
-                                    {
-                                        new Circle()
-                                        {
-                                            Origin = Anchor.CentreLeft,
-                                            Anchor = Anchor.CentreLeft,
-                                            Width = 16,
-                                            Height = 16,
-                                            Colour = blueColorProvider.Colour4
-                                        },
-                                        new OsuSpriteText
-                                        {
-                                            Origin = Anchor.CentreLeft,
-                                            Anchor = Anchor.CentreLeft,
-                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
-                                            Text = "Speed"
-                                        }
-                                    }
-                                },
-                                new FillFlowContainer()
-                                {
-                                    AutoSizeAxes = Axes.Both,
-                                    Direction = FillDirection.Horizontal,
-                                    Spacing = new Vector2(12),
-                                    Children = new Drawable[]
-                                    {
-                                        new Circle()
-                                        {
-                                            Origin = Anchor.CentreLeft,
-                                            Anchor = Anchor.CentreLeft,
-                                            Width = 16,
-                                            Height = 16,
-                                            Colour = redColorProvider.Colour1
-                                        },
-                                        new OsuSpriteText
-                                        {
-                                            Origin = Anchor.CentreLeft,
-                                            Anchor = Anchor.CentreLeft,
-                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
-                                            Text = "Reading"
-                                        }
-                                    }
+                                    Margin = new MarginPadding() { Top = 120 }
                                 },
                             }
+                        },
+                        new Container()
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
+                            Children = new Drawable[]
+                            {
+                                new Container
+                                {
+                                    Origin = Anchor.TopRight,
+                                    Anchor = Anchor.TopRight,
+                                    AutoSizeAxes = Axes.Both,
+                                    Masking = true,
+                                    CornerRadius = 6,
+                                    Children = new Drawable[]
+                                    {
+                                        new Box()
+                                        {
+                                            RelativeSizeAxes = Axes.Both,
+                                            Colour = Colour4.FromHex("3d3946aa")
+                                        },
+                                        new FillFlowContainer
+                                        {
+                                            AutoSizeAxes = Axes.Both,
+                                            Padding = new MarginPadding() { Horizontal = 14, Vertical = 10 },
+                                            Direction = FillDirection.Vertical,
+                                            Spacing = new Vector2(8),
+                                            Children = new Drawable[]
+                                            {
+                                                new FillFlowContainer()
+                                                {
+                                                    AutoSizeAxes = Axes.Both,
+                                                    Direction = FillDirection.Horizontal,
+                                                    Spacing = new Vector2(12),
+                                                    Children = new Drawable[]
+                                                    {
+                                                        new Circle()
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Width = 16,
+                                                            Height = 16,
+                                                            Colour = blueColorProvider.Colour3
+                                                        },
+                                                        new OsuSpriteText
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Text = "Aim"
+                                                        }
+                                                    }
+                                                },
+                                                new FillFlowContainer()
+                                                {
+                                                    AutoSizeAxes = Axes.Both,
+                                                    Direction = FillDirection.Horizontal,
+                                                    Spacing = new Vector2(12),
+                                                    Children = new Drawable[]
+                                                    {
+                                                        new Circle()
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Width = 16,
+                                                            Height = 16,
+                                                            Colour = redColorProvider.Colour1
+                                                        },
+                                                        new OsuSpriteText
+                                                        {
+                                                            Origin = Anchor.CentreLeft,
+                                                            Anchor = Anchor.CentreLeft,
+                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Text = "Speed (after)"
+                                                        }
+                                                    }
+                                                },
+                                            }
+                                        }
+                                    },
+                                },
+                                new StrainVisualizer(beatmap, false)
+                                {
+                                    Margin = new MarginPadding() { Top = 120 }
+                                }
+                            }
                         }
-                    },
-                },
-                new StrainVisualizer(beatmap)
-                {
-                    Margin = new MarginPadding() { Top = 120 }
+                    }
                 }
             };
         }
