@@ -387,7 +387,7 @@ namespace NewsVisualiser
                         },
                         new OsuSpriteText
                         {
-                            Text = "* mod multiplier depends on the other factors such as mod combinations or mod settings",
+                            Text = "* mod multiplier depends on other factors such as mod combinations or mod settings",
                             Font = OsuFont.GetFont(size: 28f, weight: FontWeight.SemiBold),
                         },
                     }
