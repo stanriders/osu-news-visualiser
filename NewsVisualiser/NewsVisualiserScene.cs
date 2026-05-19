@@ -211,21 +211,21 @@ namespace NewsVisualiser
                                     Origin = Anchor.BottomLeft,
                                     Anchor = Anchor.BottomLeft,
                                     Text = $"Sidetracked Day [{beatmap.BeatmapInfo.DifficultyName}]",
-                                    Font = OsuFont.Default.With(size: 24, weight: FontWeight.SemiBold),
+                                    Font = OsuFont.Default.With(size: 28, weight: FontWeight.SemiBold),
                                 },
                                 new OsuSpriteText()
                                 {
                                     Origin = Anchor.BottomLeft,
                                     Anchor = Anchor.BottomLeft,
                                     Text = "by wuk",
-                                    Font = OsuFont.Default.With(size: 22, weight: FontWeight.Regular),
+                                    Font = OsuFont.Default.With(size: 26, weight: FontWeight.Regular),
                                 },
                             }
                         },
                         new OsuSpriteText
                         {
                             Text = "mapset by sytho",
-                            Font = OsuFont.Default.With(size: 20),
+                            Font = OsuFont.Default.With(size: 24),
                         },
                     }
                 },
@@ -284,7 +284,7 @@ namespace NewsVisualiser
                                                         {
                                                             Origin = Anchor.CentreLeft,
                                                             Anchor = Anchor.CentreLeft,
-                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Font = OsuFont.Inter.With(size: 26, fixedWidth: false),
                                                             Text = "Aim"
                                                         }
                                                     }
@@ -308,7 +308,7 @@ namespace NewsVisualiser
                                                         {
                                                             Origin = Anchor.CentreLeft,
                                                             Anchor = Anchor.CentreLeft,
-                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Font = OsuFont.Inter.With(size: 26, fixedWidth: false),
                                                             Text = "Speed (before)"
                                                         }
                                                     }
@@ -370,7 +370,7 @@ namespace NewsVisualiser
                                                         {
                                                             Origin = Anchor.CentreLeft,
                                                             Anchor = Anchor.CentreLeft,
-                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Font = OsuFont.Inter.With(size: 26, fixedWidth: false),
                                                             Text = "Aim"
                                                         }
                                                     }
@@ -394,7 +394,7 @@ namespace NewsVisualiser
                                                         {
                                                             Origin = Anchor.CentreLeft,
                                                             Anchor = Anchor.CentreLeft,
-                                                            Font = OsuFont.Inter.With(size: 24, fixedWidth: false),
+                                                            Font = OsuFont.Inter.With(size: 26, fixedWidth: false),
                                                             Text = "Speed (after)"
                                                         }
                                                     }
