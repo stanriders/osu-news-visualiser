@@ -271,7 +271,7 @@ namespace NewsVisualiser
                                 getModContainer(new OsuModHardRock(), 1.06, 1.09),
                                 getModContainer(new OsuModDoubleTime(), 1.1, 1.23, true, 1.0, 1.45, 1.0, 1.2),
                                 getModContainer(new OsuModHidden(), 1.06, 1.04, true),
-                                getModContainer(new OsuModTraceable(), 1.0, 1.02),
+                                getModContainer(new OsuModTraceable(), 1.0, 1.02, true),
                                 getModContainer(new OsuModFlashlight(), 1.12, 1.2, true),
                             }
                         },
